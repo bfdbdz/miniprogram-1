@@ -97,7 +97,7 @@ App({
 
 	// initWebSocket() {
 	// 	wx.connectSocket({
-	// 		url: 'wss://localhost:8080/websocket',
+	// 		url: 'wss://192.168.160.155:8080/websocket',
 	// 		header: {
 	// 			'content-type': 'application/json'
 	// 		},

@@ -53,7 +53,7 @@ Page({
 			});
 		} else {
 			wx.request({
-				url: 'http://localhost:8080/auth/login',
+				url: 'http://192.168.160.155:8080/auth/login',
 				method: 'POST',
 				data: {
 					username: e.detail.value.username,

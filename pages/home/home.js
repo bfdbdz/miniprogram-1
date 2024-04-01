@@ -134,11 +134,11 @@ Page({
 
 		if (userRole == 0) {
 			this.setData({
-				roleURL: 'http://localhost:8080/passenger/location'
+				roleURL: 'http://192.168.160.155:8080/passenger/location'
 			})
 		} else if (userRole == 1) {
 			this.setData({
-				roleURL: 'http://localhost:8080/driver/location'
+				roleURL: 'http://192.168.160.155:8080/driver/location'
 			})
 		}
 		console.log("设定的url", this.data.roleURL)
