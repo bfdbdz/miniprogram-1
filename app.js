@@ -106,13 +106,13 @@ App({
 				userRole = 'driver'
 			}
 			wx.connectSocket({
-				url: 'ws://localhost:8080/ws/' + userRole + '_' + id,
+				url: 'ws://192.168.119.155:8080/ws/' + userRole + '_' + id,
 				header: {
 					'content-type': 'application/json'
 				},
 				method: 'GET'
 			})
-			console.log("wsURL", 'wss://localhost:8080/ws/' + userRole + '_' + id)
+			console.log("wsURL", 'wss://192.168.119.155:8080/ws/' + userRole + '_' + id)
 		}
 
 		wx.onSocketOpen((res) => {
@@ -120,8 +120,45 @@ App({
 		})
 
 		wx.onSocketMessage((res) => {
-			console.log('收到服务器数据：', res)
-			// 在这里处理收到的消息
+
+			// 前方到站提醒
+			let data = JSON.parse(res.data)
+			console.log('收到服务器数据：', data)
+			if (data.type == 2) {
+				console.log("播放音频")
+				wx.setInnerAudioOption({
+					obeyMuteSwitch:'false'
+				})
+				const innerAudioContext = wx.createInnerAudioContext({
+					useWebAudioImplement: false
+				})
+				switch (data.message) {
+					case 'changan':
+						console.log("选择长安音频")
+						innerAudioContext.src = "/audio/changan.mp3"
+						break;
+					case 'gaoxin':
+						innerAudioContext.src = "/audio/gaoxin.mp3"
+						break;
+					case 'guojiyi':
+						innerAudioContext.src = "/audio/guojiyi.mp3"
+						break;
+					case 'laodong':
+						innerAudioContext.src = "/audio/laodong.mp3"
+						break;
+					case 'youyi':
+						innerAudioContext.src = "/audio/youyi.mp3"
+						break;
+					case 'ziwei':
+						innerAudioContext.src = "/audio/ziwei.mp3"
+						break;
+					default:
+						break;
+				}
+				console.log("播放长安")
+				innerAudioContext.play()
+				// innerAudioContext.destroy()
+			}
 		})
 
 		wx.onSocketError((res) => {

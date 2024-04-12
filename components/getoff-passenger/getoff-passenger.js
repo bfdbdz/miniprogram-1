@@ -37,7 +37,7 @@ Component({
 					stationChoice = 'changan'
 					break;
 				case 1:
-					stationChoice = 'imc_xa'
+					stationChoice = 'guojiyi'
 					break;
 				case 2:
 					stationChoice = 'ziwei'
@@ -62,7 +62,7 @@ Component({
 					break;
 			}
 			wx.request({
-				url: 'http://localhost:8080/passenger/stationName?stationName='+stationChoice,
+				url: 'http://192.168.119.155:8080/passenger/stationName?stationName='+stationChoice,
 				method: 'PUT',
 				header: {
 					'Authorization': this.data.userInfo.token
