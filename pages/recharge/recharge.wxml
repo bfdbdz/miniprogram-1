@@ -1,0 +1,12 @@
+<!--pages/recharge/recharge.wxml-->
+<view class="container">
+	<text class="title">充值金额</text>
+	<view class="money-container">
+		<view class="money  {{selected == index ? 'selected' : ''}}" wx:for="{{options}}" wx:key="index" data-index="{{index}}" bindtap="handleMoneyClick">
+      <text>￥{{item}}</text>
+    </view>	
+	</view>
+	<view  class="recharge">
+	<button class="recharge-btn" bind:tap="rechargeConfirm">确认充值</button>
+	</view>
+</view>

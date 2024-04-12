@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+	"component": true,
+  "usingComponents": {
+		"getoff-passenger":"../../components/getoff-passenger/getoff-passenger",
+		"getoff-driver":"../../components/getoff-driver/getoff-driver"
+	}
 }

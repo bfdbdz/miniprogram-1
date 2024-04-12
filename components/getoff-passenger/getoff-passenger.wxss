@@ -1,0 +1,132 @@
+/* components/getoff-passenger/getoff-passenger.wxss */
+	.noBus {
+		display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	}
+
+	.noBus-Img{
+		margin-top: 30%;
+		width: 40%;
+		margin-bottom: 10%;
+	}
+
+	.noBusImg{
+		width: 100%;
+	}
+
+	.noBus-title{
+		color: red;
+		font-size: 50rpx;
+		font-weight: 600;
+	}
+
+	.noBus-content{
+		font-size: 45rpx;
+		margin-top: 5%;
+	}
+
+.container{
+	width: 100%;
+	padding-top: 80rpx;
+	display: flex;
+  flex-direction: column;
+	align-items: flex-start;
+}
+
+.title{
+	margin-left: 40rpx;
+	font-size: 35rpx;
+	height: 60rpx;
+	color: rgb(112, 112, 112);
+}
+
+.station-container{
+	width: 100%;
+	margin-top: 30rpx;
+	display: flex;
+	justify-content: center;
+  flex-wrap: wrap;
+}
+
+.station{
+	width: 40%;
+	height: 200rpx;
+	margin: 2%;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.station:active{
+	background-color: #6586b5c0;
+}
+
+.stationImg{
+	width: 80rpx;
+	height: 80rpx;
+}
+
+.stationName{
+	margin-top: 15rpx;
+	font-size: 35rpx;
+}
+
+.stationName.selected{
+	color: #6587b5;
+}
+
+.getoff{
+	width: 100%;
+	margin-top: 70rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.getoff-btn{
+	background-color: #6587b5;
+	color: white;
+	border-radius: 30rpx;
+}
+
+.getoff-btn:active {
+  background-color: #486183;
+}
+
+.successContainer{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.successImg{
+	width: 40%;
+	margin: 10%;
+}
+
+.successTitle{
+	font-size: 45rpx;
+	font-weight: 600;
+}
+
+.seccessName{
+	font-size: 50rpx;
+	margin-top: 5%;
+	color: #6587b5;
+}
+
+.success-btn{
+	margin-top: 25%;
+	background-color: #6587b5;
+	color: white;
+	border-radius: 30rpx;
+}
+
+.success-btn:active {
+  background-color: #486183;
+}

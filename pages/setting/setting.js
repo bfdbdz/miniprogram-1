@@ -1,4 +1,4 @@
-// pages/mine/mine.js
+// pages/setting/setting.js
 const app = getApp()
 
 Page({
@@ -7,50 +7,20 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		userInfo: app.globalData.userInfo.userInfo,
-		role: ''
+		userInfo: app.globalData.userInfo.userInfo
 	},
 
-	logout() {
-		// 清空本地缓存
-		wx.clearStorageSync();
-	
-		// 断开webSocket连接
-		wx.closeSocket()
-
-		// 返回登录页
-		wx.reLaunch({
-			url: '/pages/login/login',
+	toChangePW() {
+		wx.navigateTo({
+			url: '/pages/password/password',
 		})
-		console.log("退出登录")
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad(options) {
-		console.log("个人信息",app.globalData.userInfo.userInfo)
-		if (this.data.userInfo.role == 0) {
-			this.setData({
-				role: "乘客"
-			})
-		} else if (this.data.userInfo.role == 1) {
-			this.setData({
-				role: "司机"
-			})
-		}
-	},
-	
-	toSetting(){
-		wx.navigateTo({
-			url: '/pages/setting/setting',
-		})
-	},
 
-	toWallet(){
-		wx.navigateTo({
-			url: '/pages/wallet/wallet',
-		})
 	},
 
 	/**
@@ -64,7 +34,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow() {
-
+		console.log("手机号", this.data.userInfo.phone)
 	},
 
 	/**

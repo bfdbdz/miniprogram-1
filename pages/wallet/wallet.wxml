@@ -1,0 +1,9 @@
+<!--pages/wallet/wallet.wxml-->
+<view class="container">
+      <text class="label">余额</text>
+      <text class="value">¥ {{userInfo.money}}</text>
+		</view>
+
+		<view class="recharge" bind:tap="recharge">
+			<button class="recharge-btn" >充值</button>
+		</view>

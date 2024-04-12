@@ -1,0 +1,27 @@
+/* pages/wallet/wallet.wxss */
+.label{
+	height: 100rpx;
+	font-size: 40rpx;
+}
+
+.value{
+	font-size: 70rpx;
+	font-weight: 600;
+}
+
+.recharge{
+	position: absolute;
+	bottom: 100rpx;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.recharge-btn{
+	background-color: #6587b5;
+	color: white;
+	border-radius: 10rpx;
+}
+
+.recharge-btn:active {
+  background-color: #486183;
+}

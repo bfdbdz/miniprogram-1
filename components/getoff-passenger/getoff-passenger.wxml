@@ -1,0 +1,34 @@
+<!--components/getoff-passenger/getoff-passenger.wxml-->
+<view class="noBus" wx:if="{{userInfo.driverId == 0}}">
+	<!-- 未匹配到司机 -->
+	<view class="noBus-Img">
+		<image class="noBusImg" src="../../images/getoff-icons/sorry.png" mode="widthFix"></image>
+	</view>
+	<view class="noBus-title">抱 歉 !</view>
+	<view class="noBus-content">还未识别到您在车上</view>
+</view>
+<view wx:else>
+	<!-- 已匹配到司机 -->
+	<view class="container" wx:if="{{userInfo.stationName == null}}">
+		<!-- 选择下车站点 -->
+		<text class="title">请选择下车站点：</text>
+		<view class="station-container">
+			<view class="station" wx:for="{{options}}" wx:key="index" data-index="{{index}}" bindtap="handleStationClick">
+				<image class="stationImg" src="{{selected == index ? '../../images/getoff-icons/selected-station.png' : '../../images/getoff-icons/station.png'}}" mode="aspectFit"></image>
+				<text class="stationName {{selected == index ? 'selected' : ''}}">{{item}}</text>
+			</view>
+		</view>
+		<view class="getoff">
+			<button class="getoff-btn" bind:tap="stationConfirm">确认</button>
+		</view>
+	</view>
+	<view wx:else>
+		<!-- 默认下车站点 -->
+		<view class="successContainer">
+			<image class="successImg" src="../../images/getoff-icons/success.png" mode="widthFix"></image>
+			<view class="successTitle">已选择下车站点:</view>
+			<view class="seccessName">{{options[selected]}}</view>
+			<button class="success-btn" bind:tap="rselect">重新选择</button>
+		</view>
+	</view>
+</view>

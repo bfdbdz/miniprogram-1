@@ -1,6 +1,6 @@
 // pages/home/home.js
 const app = getApp()
-const accessToken = app.getLatestAccessToken();
+// const accessToken = app.getLatestAccessToken();
 
 Page({
 
@@ -19,6 +19,7 @@ Page({
 	//创建定时器
 	createLocationTimer() {
 		this.getLocationAndSpeed()
+		this.getCurrentTime()
 		this.timer = setInterval(() => {
 			this.getLocationAndSpeed()
 			this.getCurrentTime()
@@ -134,11 +135,11 @@ Page({
 
 		if (userRole == 0) {
 			this.setData({
-				roleURL: 'http://192.168.160.155:8080/passenger/location'
+				roleURL: 'http://localhost:8080/passenger/location'
 			})
 		} else if (userRole == 1) {
 			this.setData({
-				roleURL: 'http://192.168.160.155:8080/driver/location'
+				roleURL: 'http://localhost:8080/driver/location'
 			})
 		}
 		console.log("设定的url", this.data.roleURL)
@@ -148,7 +149,7 @@ Page({
 	uploadLocationAndSpeed(latitude, longitude, speed, time) {
 		this.sendRequest()
 		wx.request({
-			url: this.data.roleURL, //补全地址
+			url: this.data.roleURL,
 			header: {
 				'Authorization': app.globalData.userInfo.userInfo.token
 			},
@@ -161,8 +162,8 @@ Page({
 			},
 			success: (res) => {
 				console.log('上传成功:', res.data)
-				// 请求判断结果
-				this.onTheBus()
+				// 请求判断结果，监听websocket消息
+				this.registerWebSocketListener()
 			},
 			fail: (err) => {
 				console.error('上传失败:', err)
@@ -181,6 +182,80 @@ Page({
 	 */
 	onLoad(options) {
 		this.createLocationTimer() //页面加载时创建定时器
+		this.getLogUserInfo() //获取已登录用户信息
+	},
+
+	//获取用户钱包余额、默认下车站点和匹配司机id
+	getLogUserInfo() {
+		wx.request({
+			url: 'http://localhost:8080/passenger/current',
+			method: 'GET',
+			header: {
+				'content-type': 'application/json',
+				'Authorization': app.globalData.userInfo.userInfo.token
+			},
+			success: (res) => {
+				if (res.statusCode === 200) {
+					if (res.data.code === 200) {
+						console.log("获取当前登录用户信息", res)
+						const newUserInfo = {
+							stationName: res.data.data.stationName,
+							driverId: res.data.data.driverId,
+							money: res.data.data.money
+						}
+						const userInfoPast = app.globalData.userInfo.userInfo
+						const userInfo = {
+							...userInfoPast,
+							...newUserInfo
+						}
+						console.log("更新后的用户信息", userInfo)
+						//更新本地存储
+						wx.setStorage({
+							key: 'userInfo',
+							userInfo
+						})
+						//更新全局数据
+						app.globalData.userInfo = {
+							userInfo
+						}
+						console.log("全局数据更新成功？", app.globalData.userInfo.userInfo)
+					}
+				}
+			},
+			fail: (err) => {
+				//请求失败
+				console.log("获取当前登录用户信息失败", err);
+			}
+		})
+	},
+
+	//监听后端人车拟合消息
+	registerWebSocketListener() {
+		// 监听 WebSocket 连接打开事件
+		wx.onSocketOpen((res) => {
+			console.log('WebSocket连接已打开');
+		});
+
+		// 监听 WebSocket 接受到服务器的消息事件
+		wx.onSocketMessage((res) => {
+			console.log('收到服务器数据：', res.data);
+			this.handleWebSocketMessage(res.data);
+		});
+
+		// 监听 WebSocket 连接错误事件
+		wx.onSocketError((res) => {
+			console.error('WebSocket连接发生错误：', res.errMsg);
+		});
+
+		// 监听 WebSocket 连接关闭事件
+		wx.onSocketClose((res) => {
+			console.log('WebSocket连接已关闭');
+		});
+	},
+
+	handleWebSocketMessage(data) {
+		console.log('收到的消息：', data);
+		// if(data.type == '1')
 	},
 
 	/**

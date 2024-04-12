@@ -10,7 +10,7 @@ Page({
 		checked: false,
 		array: ['乘客', '司机'],
 		current: '',
-		userInfo: {},
+		// userInfo: {},
 		message: ''
 	},
 	switchSection: function () {
@@ -53,7 +53,7 @@ Page({
 			});
 		} else {
 			wx.request({
-				url: 'http://192.168.160.155:8080/auth/login',
+				url: 'http://localhost:8080/auth/login',
 				method: 'POST',
 				data: {
 					username: e.detail.value.username,
@@ -80,8 +80,9 @@ Page({
 						app.globalData.userInfo = {
 							// 新的用户信息
 							userInfo
-						};
+						}
 						console.log("登录成功")
+						app.initWebSocket()
 						// console.log("app userInfo", app.globalData.userInfo.userInfo.role)
 						wx.showToast({
 							title: '登录成功!',
@@ -126,9 +127,9 @@ Page({
 	 */
 	onLoad(options) {
 
-		this.setData({
-			userInfo: app.globalData.userInfo
-		});
+		// this.setData({
+		// 	userInfo: app.globalData.userInfo
+		// });
 
 	},
 

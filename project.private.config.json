@@ -10,6 +10,48 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/getoff/getoff",
+          "pathName": "pages/getoff/getoff",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/recharge/recharge",
+          "pathName": "pages/recharge/recharge",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/password/password",
+          "pathName": "pages/password/password",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/setting/setting",
+          "pathName": "pages/setting/setting",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/wallet/wallet",
+          "pathName": "pages/wallet/wallet",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/mine/mine",
+          "pathName": "pages/mine/mine",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/home/home",
           "pathName": "pages/home/home",
           "query": "",

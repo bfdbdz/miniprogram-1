@@ -1,2 +1,36 @@
 <!--pages/mine/mine.wxml-->
-<text>pages/mine/mine.wxml</text>
+<!-- <text>pages/mine/mine.wxml</text> -->
+<view class="container">
+  <!-- 头像和名字 -->
+  <view class="profile-header">
+    <image class="avatar" src="../../images/mine_icons/avatar.jpg"></image>
+		<view class="name-wapper">
+    <text class="name">{{userInfo.name}}</text>
+		<text class="username">{{userInfo.username}} {{role}}</text>
+	</view>
+  </view>
+  
+	<view class="choice">
+  <!-- 账号与安全 -->
+	<view class="section" >
+	<view class="item" bindtap="toSetting">
+		<text class="label">账号与安全</text>
+		<image class="img" src="../../images/mine_icons/next.png" mode="aspectFit"></image>
+	</view>
+	</view>
+   
+  <!-- 钱包 -->
+  <view class="section" wx:if="{{userInfo.role == 0}}">
+    <view class="item" bindtap="toWallet">
+      <text class="label">钱包</text>
+			<image class="img" src="../../images/mine_icons/next.png" mode="aspectFit"></image>
+    </view>
+	</view>
+</view>
+</view>
+   
+  <!-- 退出登录 -->
+  <view class="out" bindtap="logout">
+      <button class="out-button">退出登录</button>
+  </view>
+  

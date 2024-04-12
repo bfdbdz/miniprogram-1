@@ -1,0 +1,49 @@
+/* pages/setting/setting.wxss */
+.container{
+	width: 100%;
+	padding: 40rpx;
+	display: flex;
+  flex-direction: column;
+	align-items: flex-start;
+}
+
+.choice{
+	width: 100%;
+	background-color: rgb(243, 242, 242);
+	border-radius: 30rpx;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.section{
+	height:100rpx;
+	width: 90%;
+	display: flex;
+	align-items: center;
+}
+
+.item{
+	width: 100%;
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label{
+	font-size: 35rpx;
+	width: 300rpx;
+	color: #000;
+}
+
+.value {
+	color: rgb(163, 163, 163);
+  flex-grow: 1; 
+  text-align: right;
+}
+
+.img{
+	height: 50rpx;
+	width: 50rpx;
+}

@@ -11,9 +11,9 @@ App({
 		wx.setStorageSync('logs', logs)
 
 		// 清除 access_token 和 access_token_expired_time
-		this.clearAccessTokenCache();
+		// this.clearAccessTokenCache();
 
-		this.checkAccessToken();
+		// this.checkAccessToken();
 
 		this.getUserInfo()
 
@@ -95,31 +95,43 @@ App({
 		}, 5000);
 	},
 
-	// initWebSocket() {
-	// 	wx.connectSocket({
-	// 		url: 'wss://192.168.160.155:8080/websocket',
-	// 		header: {
-	// 			'content-type': 'application/json'
-	// 		},
-	// 		method: 'GET'
-	// 	})
+	initWebSocket() {
+		if (this.globalData.userInfo) {
+			var id = this.globalData.userInfo.userInfo.id
+			var role = this.globalData.userInfo.userInfo.role
+			var userRole
+			if (role == 0) {
+				userRole = 'passenger'
+			} else if (role == 1) {
+				userRole = 'driver'
+			}
+			wx.connectSocket({
+				url: 'ws://localhost:8080/ws/' + userRole + '_' + id,
+				header: {
+					'content-type': 'application/json'
+				},
+				method: 'GET'
+			})
+			console.log("wsURL", 'wss://localhost:8080/ws/' + userRole + '_' + id)
+		}
 
-	// 	wx.onSocketOpen((res) => {
-	// 		console.log('WebSocket连接已打开')
-	// 	})
+		wx.onSocketOpen((res) => {
+			console.log('WebSocket连接已打开')
+		})
 
-	// 	wx.onSocketMessage((res) => {
-	// 		console.log('收到服务器数据：', res.data)
-	// 		// 在这里处理收到的消息
-	// 	})
+		wx.onSocketMessage((res) => {
+			console.log('收到服务器数据：', res)
+			// 在这里处理收到的消息
+		})
 
-	// 	wx.onSocketError((res) => {
-	// 		console.error('WebSocket连接发生错误：', res.errMsg)
-	// 	})
+		wx.onSocketError((res) => {
+			console.error('WebSocket连接发生错误：', res.errMsg)
+		})
 
-	// 	wx.onSocketClose((res) => {
-	// 		console.log('WebSocket连接已关闭')
-	// 	})
-	// }
+		wx.onSocketClose((res) => {
+
+			console.log('WebSocket连接已关闭')
+		})
+	}
 
 })
