@@ -74,7 +74,7 @@ Component({
 		getStop(){
 			console.log("获取一次stop")
 			wx.request({
-				url: 'http://192.168.202.155:8080/driver/stop',
+				url: 'http://localhost:8080/driver/stop',
 				method:'GET',
 				header:{
 					'Authorization': this.data.userInfo.token

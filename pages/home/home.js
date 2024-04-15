@@ -135,11 +135,11 @@ Page({
 
 		if (userRole == 0) {
 			this.setData({
-				roleURL: 'http://192.168.202.155:8080/passenger/location'
+				roleURL: 'http://localhost:8080/passenger/location'
 			})
 		} else if (userRole == 1) {
 			this.setData({
-				roleURL: 'http://192.168.202.155:8080/driver/location'
+				roleURL: 'http://localhost:8080/driver/location'
 			})
 		}
 		console.log("设定的url", this.data.roleURL)
@@ -190,7 +190,7 @@ Page({
 	//获取用户钱包余额、默认下车站点和匹配司机id
 	getLogUserInfo() {
 		wx.request({
-			url: 'http://192.168.202.155:8080/passenger/current',
+			url: 'http://localhost:8080/passenger/current',
 			method: 'GET',
 			header: {
 				'content-type': 'application/json',
@@ -284,7 +284,7 @@ Page({
 
 	getDriverId(){
 		wx.request({
-			url: 'http://192.168.202.155:8080/passenger/current',
+			url: 'http://localhost:8080/passenger/current',
 			method: 'GET',
 			header: {
 				'content-type': 'application/json',

@@ -80,7 +80,7 @@ Component({
 					break;
 			}
 			wx.request({
-				url: 'http://192.168.202.155:8080/passenger/stationName?stationName=' + stationChoice,
+				url: 'http://localhost:8080/passenger/stationName?stationName=' + stationChoice,
 				method: 'PUT',
 				header: {
 					'Authorization': this.properties.userInfo.token

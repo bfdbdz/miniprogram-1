@@ -58,7 +58,7 @@ Page({
 		} else {
 			console.log("role", e.detail.value.role);
 			wx.request({
-				url: "http://192.168.202.155:8080/auth/register",
+				url: "http://localhost:8080/auth/register",
 				method: 'POST',
 				data: {
 					name: e.detail.value.name,

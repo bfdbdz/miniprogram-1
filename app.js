@@ -108,13 +108,13 @@ App({
 				userRole = 'driver'
 			}
 			this.socketTask = wx.connectSocket({
-				url: 'ws://192.168.202.155:8080/ws/' + userRole + '_' + id,
+				url: 'ws://localhost:8080/ws/' + userRole + '_' + id,
 				header: {
 					'content-type': 'application/json'
 				},
 				method: 'GET'
 			})
-			console.log("wsURL", 'wss://192.168.202.155:8080/ws/' + userRole + '_' + id)
+			console.log("wsURL", 'wss://localhost:8080/ws/' + userRole + '_' + id)
 		}
 
 		this.socketTask.onOpen(function () {

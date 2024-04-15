@@ -39,7 +39,7 @@ Page({
 		}
 		console.log("userRole", userRole)
 		wx.request({
-			url: 'http://192.168.202.155:8080/' + userRole + '/password',
+			url: 'http://localhost:8080/' + userRole + '/password',
 			method: 'PUT',
 			data: {
 				oldPassword: e.detail.value.oldPassword,
