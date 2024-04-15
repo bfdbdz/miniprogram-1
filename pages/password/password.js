@@ -15,19 +15,21 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad(options) {
+		console.log(this.data.userInfo.role)
 		if (this.data.userInfo.role == 0) {
 			this.setData({
 				user: '学号'
 			})
-		} else if (userInfo.role == 1) {
+		} else if (this.data.userInfo.role == 1) {
 			this.setData({
 				user: '工号'
 			})
 		}
+		console.log(this.data.user)
 	},
 
-	passwordSubmit: function (e){
-		console.log("提交的数据",e.detail.value)
+	passwordSubmit: function (e) {
+		console.log("提交的数据", e.detail.value)
 		var role = this.data.userInfo.role
 		var userRole
 		if (role == 0) {
@@ -35,45 +37,45 @@ Page({
 		} else if (role == 1) {
 			userRole = 'driver'
 		}
-		console.log("userRole",userRole)
+		console.log("userRole", userRole)
 		wx.request({
-			url: 'http://192.168.119.155:8080/'+userRole+'/password',
-			method:'PUT',
+			url: 'http://192.168.202.155:8080/' + userRole + '/password',
+			method: 'PUT',
 			data: {
 				oldPassword: e.detail.value.oldPassword,
-				newPassword:e.detail.value.newPassword
+				newPassword: e.detail.value.newPassword
 			},
 			header: {
-				'content-type': 'application/json', 
+				'content-type': 'application/json',
 				'Authorization': this.data.userInfo.token
 			},
 			success: (res) => {
 				if (res.statusCode === 200) {
 					if (res.data.code === 200) {
-				console.log("修改密码成功",res)
-				wx.showToast({
-					icon: 'none',
-					title: '修改成功！即将跳转至上页',
-					mask: true,
-					duration: 2000
-				});
-				setTimeout(() => {
-					wx.navigateBack()
-				}, 2000); //2秒后跳转
-			}else{
-				console.log("修改失败",res)
-				wx.showToast({
-					icon: 'none',
-					title: res.data.message,
-					mask: true,
-					duration: 2000
-				});
+						console.log("修改密码成功", res)
+						wx.showToast({
+							icon: 'none',
+							title: '修改成功！即将跳转至上页',
+							mask: true,
+							duration: 2000
+						});
+						setTimeout(() => {
+							wx.navigateBack()
+						}, 2000); //2秒后跳转
+					} else {
+						console.log("修改失败", res)
+						wx.showToast({
+							icon: 'none',
+							title: res.data.message,
+							mask: true,
+							duration: 2000
+						});
+					}
+				}
+			},
+			fail: (err) => {
+				console.log("连接失败", err)
 			}
-		}
-	},
-	fail: (err) => {
-		console.log("连接失败",err)
-	}
 		})
 
 	},

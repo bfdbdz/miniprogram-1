@@ -28,8 +28,22 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow() {
-
+		this.setData({
+			userInfo:app.globalData.userInfo.userInfo
+		})
+		this.setData({
+			'getoff-passenger.userInfo':this.data.userInfo
+		})
+		console.log("切换到下车站点",this.data.userInfo)
+		const getoffDriver = this.selectComponent('#driver')
+		if(this.data.userInfo.role == 1){
+			getoffDriver.getStop()
+		}
+		// console.log("缓存中的信息",info)
 	},
+
+	
+
 
 	/**
 	 * 生命周期函数--监听页面隐藏

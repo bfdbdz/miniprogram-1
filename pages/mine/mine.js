@@ -14,6 +14,10 @@ Page({
 	logout() {
 		// 清空本地缓存
 		wx.clearStorageSync();
+
+		//清空全局数据
+		app.globalData.userInfo = {}
+		console.log(app.globalData.userInfo)
 	
 		// 断开webSocket连接
 		wx.closeSocket()

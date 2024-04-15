@@ -13,11 +13,12 @@
         <form bindsubmit="loginSubmit">
           <view class="login-on">
             <view class="login-input">
-              <input class="uni-input-1" type="number" name="username" placeholder="学号/工号" bindinput="" />
+              <input class="uni-input-1" type="number" name="username" placeholder="学号/工号" />
               <view class="wrapper">
                 <view class="uni-input-wrapper">
-                  <input class="uni-input-2" name="password" placeholder="请输入密码" :password="showPassword" />
-                  <image class="uni-icon" :src="[!showPassword ? '../../images/mine_icons/eye-active.png' : '../../images/mine_icons/eye.png']" bindtap="changePassword" mode="heightFix"></image>
+                  <input class="uni-input-2" name="password" placeholder="请输入密码" type="{{ showPassword ? 'text' : 'password' }}"/>
+                  <image class="uni-icon" wx:if="{{showPassword}}" src='../../images/mine_icons/eye-active.png' bindtap="changePassword" mode="heightFix"></image>
+									<image class="uni-icon" wx:else src='../../images/mine_icons/eye.png' bindtap="changePassword" mode="heightFix"></image>
                 </view>
               </view>
 							<view class="uni-list">

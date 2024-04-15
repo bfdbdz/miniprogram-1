@@ -1,1 +1,49 @@
 /* components/getoff-driver/getoff-driver.wxss */
+.container{
+	width: 100%;
+	padding-top: 80rpx;
+	display: flex;
+  flex-direction: column;
+	align-items: flex-start;
+}
+
+.title{
+	margin-left: 40rpx;
+	font-size: 35rpx;
+	height: 60rpx;
+	color: rgb(112, 112, 112);
+}
+
+.station-container{
+	width: 100%;
+	margin-top: 30rpx;
+	display: flex;
+	justify-content: center;
+  flex-wrap: wrap;
+}
+
+.station{
+	width: 40%;
+	height: 200rpx;
+	margin: 2%;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.station:active{
+	background-color: #6586b5c0;
+}
+
+.stationNumber{
+	font-size: 70rpx;
+	font-weight: 600;
+	color: #6587b5;
+}
+
+.stationName{
+	margin-top: 15rpx;
+	font-size: 35rpx;
+}

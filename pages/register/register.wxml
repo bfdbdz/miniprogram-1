@@ -13,14 +13,16 @@
 						<input class="uni-input-3" focus name="username" placeholder="学号/工号" />
 						<view class="wrapper">
 							<view class="uni-input-wrapper">
-								<input class="uni-input-2" name="password" placeholder="请输入密码" :password="showPassword1" />
-								<image class="uni-icon" :src="!showPassword1 ? '${wx.env.USER_DATA_PATH}/images/mine_icons/eye-active.png' : '${wx.env.USER_DATA_PATH}/images/mine_icons/eye.png'" bindtap="changePassword1" mode="heightFix"></image>
+								<input class="uni-input-2" name="password" placeholder="请输入密码" type="{{ showPassword1 ? 'text' : 'password' }}" />
+								<image class="uni-icon" wx:if="{{showPassword1}}" src='../../images/mine_icons/eye-active.png' bindtap="changePassword1" mode="heightFix"></image>
+								<image class="uni-icon" wx:else src='../../images/mine_icons/eye.png' bindtap="changePassword1" mode="heightFix"></image>
 							</view>
 						</view>
 						<view class="wrapper">
 							<view class="uni-input-wrapper">
-								<input class="uni-input-2" name="checkPassword" placeholder="请再次输入密码确认" :password="showPassword2" />
-								<image class="uni-icon" :src="!showPassword2 ? '${wx.env.USER_DATA_PATH}/images/mine_icons/eye-active.png' : '${wx.env.USER_DATA_PATH}/images/mine_icons/eye.png'" bindtap="changePassword2" mode="heightFix"></image>
+								<input class="uni-input-2" name="checkPassword" placeholder="请再次输入密码确认" type="{{ showPassword2 ? 'text' : 'password' }}" />
+								<image class="uni-icon"  wx:if="{{showPassword2}}" src='../../images/mine_icons/eye-active.png' bindtap="changePassword2" mode="heightFix"></image>
+								<image class="uni-icon"  wx:else src='../../images/mine_icons/eye.png' bindtap="changePassword2" mode="heightFix"></image>
 							</view>
 						</view>
 						<input class="uni-input-0" focus name="name" placeholder="姓名" />

@@ -75,6 +75,7 @@
 .uni-icon {
 	padding-top: 10rpx;
 	height: 50rpx;
+	width: 50rpx;
 }
 
 .uni-list {

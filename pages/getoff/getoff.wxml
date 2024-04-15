@@ -1,7 +1,7 @@
 <!--pages/getoff/getoff.wxml-->
 <view wx:if="{{userInfo.role == 0}}">
-<getoff-passenger></getoff-passenger>
+	<getoff-passenger userInfo="{{userInfo}}"></getoff-passenger>
 </view>
 <view wx:else>
-<getoff-driver></getoff-driver>
+	<getoff-driver id="driver"></getoff-driver>
 </view>

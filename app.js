@@ -1,7 +1,9 @@
 // app.js
+let eventCenter = {}
 App({
 	globalData: {
-		userInfo: {}
+		userInfo: {},
+		passengerStatus:'off'
 	},
 
 	onLaunch() {
@@ -105,26 +107,29 @@ App({
 			} else if (role == 1) {
 				userRole = 'driver'
 			}
-			wx.connectSocket({
-				url: 'ws://192.168.119.155:8080/ws/' + userRole + '_' + id,
+			this.socketTask = wx.connectSocket({
+				url: 'ws://192.168.202.155:8080/ws/' + userRole + '_' + id,
 				header: {
 					'content-type': 'application/json'
 				},
 				method: 'GET'
 			})
-			console.log("wsURL", 'wss://192.168.119.155:8080/ws/' + userRole + '_' + id)
+			console.log("wsURL", 'wss://192.168.202.155:8080/ws/' + userRole + '_' + id)
 		}
 
-		wx.onSocketOpen((res) => {
-			console.log('WebSocket连接已打开')
-		})
+		this.socketTask.onOpen(function () {
+      console.log('WebSocket 连接已打开')
+    })
 
-		wx.onSocketMessage((res) => {
-
-			// 前方到站提醒
+		this.socketTask.onMessage( (res) => {
 			let data = JSON.parse(res.data)
 			console.log('收到服务器数据：', data)
-			if (data.type == 2) {
+			// 人车拟合消息
+			if (data.type == 1){
+				this.$emit('socketMessage', data)
+			}
+			// 前方到站提醒
+			else if (data.type == 2) {
 				console.log("播放音频")
 				wx.setInnerAudioOption({
 					obeyMuteSwitch:'false'
@@ -169,6 +174,23 @@ App({
 
 			console.log('WebSocket连接已关闭')
 		})
-	}
+	},
+	// 事件中心方法
+  $on(eventName, callback) {
+    if (!eventCenter[eventName]) {
+      eventCenter[eventName] = []
+    }
+    eventCenter[eventName].push(callback)
+  },
+  $off(eventName, callback) {
+    if (eventCenter[eventName]) {
+      eventCenter[eventName] = eventCenter[eventName].filter(cb => cb !== callback)
+    }
+  },
+  $emit(eventName, ...args) {
+    if (eventCenter[eventName]) {
+      eventCenter[eventName].forEach(cb => cb(...args))
+    }
+  }
 
 })

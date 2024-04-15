@@ -135,11 +135,11 @@ Page({
 
 		if (userRole == 0) {
 			this.setData({
-				roleURL: 'http://192.168.119.155:8080/passenger/location'
+				roleURL: 'http://192.168.202.155:8080/passenger/location'
 			})
 		} else if (userRole == 1) {
 			this.setData({
-				roleURL: 'http://192.168.119.155:8080/driver/location'
+				roleURL: 'http://192.168.202.155:8080/driver/location'
 			})
 		}
 		console.log("设定的url", this.data.roleURL)
@@ -162,8 +162,6 @@ Page({
 			},
 			success: (res) => {
 				console.log('上传成功:', res.data)
-				// 请求判断结果，监听websocket消息
-				this.registerWebSocketListener()
 			},
 			fail: (err) => {
 				console.error('上传失败:', err)
@@ -181,14 +179,18 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad(options) {
-		this.createLocationTimer() //页面加载时创建定时器
+		setTimeout(() =>{
+			this.createLocationTimer() //页面加载时创建定时器
+		},5000)
 		this.getLogUserInfo() //获取已登录用户信息
+		this.handleWebSocketMessage = this.handleWebSocketMessage.bind(this)
+		app.$on('socketMessage',this.handleWebSocketMessage)
 	},
 
 	//获取用户钱包余额、默认下车站点和匹配司机id
 	getLogUserInfo() {
 		wx.request({
-			url: 'http://192.168.119.155:8080/passenger/current',
+			url: 'http://192.168.202.155:8080/passenger/current',
 			method: 'GET',
 			header: {
 				'content-type': 'application/json',
@@ -208,7 +210,8 @@ Page({
 							...userInfoPast,
 							...newUserInfo
 						}
-						console.log("更新后的用户信息", userInfo)
+						console.log("更新的用户信息", newUserInfo)
+						console.log("旧用户信息",userInfoPast)
 						//更新本地存储
 						wx.setStorage({
 							key: 'userInfo',
@@ -231,31 +234,96 @@ Page({
 
 	//监听后端人车拟合消息
 	registerWebSocketListener() {
+
 		// 监听 WebSocket 连接打开事件
-		wx.onSocketOpen((res) => {
-			console.log('WebSocket连接已打开');
-		});
+		// wx.onSocketOpen((res) => {
+		// 	console.log('WebSocket连接已打开-home页面');
+		// });
 
 		// 监听 WebSocket 接受到服务器的消息事件
-		wx.onSocketMessage((res) => {
-			console.log('收到服务器数据：', res.data);
-			this.handleWebSocketMessage(res.data);
-		});
+		// wx.onSocketMessage((res) => {
+		// 	// console.log('收到服务器数据：', res.data);
+		// 		let data = JSON.parse(res.data)
+		// 		console.log('收到服务器数据：', data)
+		// 		//人车拟合消息
+		// 		if(data.type == 1){
+		// 			// this.globalData.passengerStatus = 'on'
+		// 			this.handleWebSocketMessage(data);
+		// 		}
+		// });
 
-		// 监听 WebSocket 连接错误事件
-		wx.onSocketError((res) => {
-			console.error('WebSocket连接发生错误：', res.errMsg);
-		});
+		// // 监听 WebSocket 连接错误事件
+		// wx.onSocketError((res) => {
+		// 	console.error('WebSocket连接发生错误：', res.errMsg);
+		// });
 
-		// 监听 WebSocket 连接关闭事件
-		wx.onSocketClose((res) => {
-			console.log('WebSocket连接已关闭');
-		});
+		// // 监听 WebSocket 连接关闭事件
+		// wx.onSocketClose((res) => {
+		// 	console.log('WebSocket连接已关闭');
+		// });
 	},
 
-	handleWebSocketMessage(data) {
-		console.log('收到的消息：', data);
-		// if(data.type == '1')
+	handleWebSocketMessage(message) {
+		console.log('收到的消息：', message);
+		app.globalData.passengerStatus='on'
+		this.clearLocationTimer() //人车拟合成功，停止上传数据
+		this.getDriverId()//更新用户信息中driberId
+		wx.showModal({
+			title: '提示',
+			content: '已识别到您在车上并自动为您进行扣费，请选择下车站点',
+			showCancel:'false',
+			complete: (res) => {
+				if (res.confirm) {
+					wx.switchTab({
+						url: '../getoff/getoff',
+					})
+				}
+			}
+		})
+	},
+
+	getDriverId(){
+		wx.request({
+			url: 'http://192.168.202.155:8080/passenger/current',
+			method: 'GET',
+			header: {
+				'content-type': 'application/json',
+				'Authorization': app.globalData.userInfo.userInfo.token
+			},
+			success: (res) => {
+				if (res.statusCode === 200) {
+					if (res.data.code === 200) {
+						console.log("获取用户匹配司机id", res)
+						const newUserInfo = {
+							driverId: res.data.data.driverId
+						}
+						const userInfoPast = app.globalData.userInfo.userInfo
+						const userInfo = {
+							...userInfoPast,
+							...newUserInfo
+						}
+						console.log("更新后的匹配信息", userInfo)
+						this.setData({
+							userInfo:userInfo
+						})
+						//更新本地存储
+						wx.setStorage({
+							key: 'userInfo',
+							userInfo
+						})
+						//更新全局数据
+						app.globalData.userInfo = {
+							userInfo
+						}
+						console.log("全局数据driverId更新成功？", app.globalData.userInfo.userInfo)
+					}
+				}
+			},
+			fail: (err) => {
+				//请求失败
+				console.log("获取匹配信息失败", err);
+			}
+		})
 	},
 
 	/**

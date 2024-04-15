@@ -6,11 +6,10 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		showPassword: true,
+		showPassword: false,
 		checked: false,
 		array: ['乘客', '司机'],
 		current: '',
-		// userInfo: {},
 		message: ''
 	},
 	switchSection: function () {
@@ -19,15 +18,21 @@ Page({
 		})
 	},
 	changePassword: function () {
-		this.showPassword = !this.showPassword;
+		this.setData({
+			showPassword: !this.data.showPassword
+		})
 	},
 	checkboxChange: function (e) {
 		if (e.detail.value.length > 0) {
-			this.checked = true
+			this.setData({
+				checked:true
+			})
 		} else {
-			this.checked = false
+			this.setData({
+				checked:false
+			})
 		}
-		console.log(this.checked)
+		console.log(this.data.checked)
 	},
 	radioChange: function (e) {
 		console.log(e);
@@ -43,7 +48,7 @@ Page({
 	},
 	loginSubmit: function (e) {
 		console.log("提交", e.detail.value)
-		if (this.checked == false) {
+		if (this.data.checked == false) {
 			console.log("未勾选协议");
 			wx.showToast({
 				title: '请阅读并同意页面下方的协议',
@@ -53,7 +58,7 @@ Page({
 			});
 		} else {
 			wx.request({
-				url: 'http://192.168.119.155:8080/auth/login',
+				url: 'http://192.168.202.155:8080/auth/login',
 				method: 'POST',
 				data: {
 					username: e.detail.value.username,

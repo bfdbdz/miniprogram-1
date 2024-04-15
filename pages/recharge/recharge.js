@@ -28,7 +28,7 @@ Page({
 	rechargeConfirm() {
 		// console.log("充值的金额",this.data.options[this.data.selected])
 		wx.request({
-			url: 'http://192.168.119.155:8080/passenger/payment?money='+this.data.options[this.data.selected],
+			url: 'http://192.168.202.155:8080/passenger/payment?money='+this.data.options[this.data.selected],
 			method: 'PUT',
 			// data: {
 				

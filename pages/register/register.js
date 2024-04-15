@@ -5,8 +5,8 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		showPassword1: true,
-		showPassword2: true,
+		showPassword1: false,
+		showPassword2: false,
 		array: ['乘客', '司机'],
 		current: '',
 		checked: false
@@ -58,7 +58,7 @@ Page({
 		} else {
 			console.log("role", e.detail.value.role);
 			wx.request({
-				url: "http://192.168.119.155:8080/auth/register",
+				url: "http://192.168.202.155:8080/auth/register",
 				method: 'POST',
 				data: {
 					name: e.detail.value.name,
@@ -80,9 +80,7 @@ Page({
 							});
 							// 成功后自动跳转至登录界面
 							setTimeout(() => {
-								wx.navigateTo({
-									url: '/pages/login/login'
-								});
+								wx.navigateBack()
 								console.log("跳转");
 							}, 2000); //2秒后跳转
 						} else {
@@ -107,9 +105,7 @@ Page({
 		}
 	},
 	switchSection: function () {
-		wx.navigateTo({
-			url: '../login/login',
-		})
+		wx.navigateBack()
 	},
 
 

@@ -40,7 +40,7 @@ Page({
 	//获取最新余额
 	getNewMoney(){
 		wx.request({
-			url: 'http://192.168.119.155:8080/passenger/current',
+			url: 'http://192.168.202.155:8080/passenger/current',
 			method: 'GET',
 			header: {
 				'content-type': 'application/json',

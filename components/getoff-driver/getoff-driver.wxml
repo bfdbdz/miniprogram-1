@@ -1,2 +1,11 @@
 <!--components/getoff-driver/getoff-driver.wxml-->
-<text>components/getoff-driver/getoff-driver.wxml</text>
+<view class="container">
+		<!-- 选择下车站点 -->
+		<text class="title">各下车站点人数：</text>
+		<view class="station-container">
+			<view class="station" wx:for="{{optionsKeys}}" wx:key="index" >
+				<text class="stationNumber">{{options[item]}}</text>
+				<text class="stationName">{{item}}</text>
+			</view>
+		</view>
+	</view>
