@@ -3,6 +3,8 @@ const app = getApp()
 
 Page({
 
+	isPageShowing:true,
+
 	/**
 	 * 页面的初始数据
 	 */
@@ -13,7 +15,7 @@ Page({
 
 	logout() {
 		// 清空本地缓存
-		wx.clearStorageSync();
+		wx.clearStorage();
 
 		//清空全局数据
 		app.globalData.userInfo = {}
@@ -33,12 +35,19 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad(options) {
+		if (this.data.userInfo !== app.globalData.userInfo.userInfo) {
+			// 全局数据已更新,重置页面数据
+			this.setData({
+				userInfo: app.globalData.userInfo.userInfo
+			});
+		}
 		console.log("个人信息",app.globalData.userInfo.userInfo)
-		if (this.data.userInfo.role == 0) {
+		console.log('信息页面显示',this.data.userInfo)
+		if (app.globalData.userInfo.userInfo.role == 0) {
 			this.setData({
 				role: "乘客"
 			})
-		} else if (this.data.userInfo.role == 1) {
+		} else if (app.globalData.userInfo.userInfo.role == 1) {
 			this.setData({
 				role: "司机"
 			})
@@ -82,7 +91,18 @@ Page({
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload() {
-
+		this.setData({
+			userInfo:{}
+		})
+		// 移除页面实例缓存
+		this.isPageShowing = false; // 设置一个标记,表示页面已不在显示
+		currentPages = getCurrentPages(); // 获取当前所有页面实例
+		currentPages.forEach(page => {
+			if (!page.isPageShowing) {
+				page = null; // 手动移除已不显示的页面实例的缓存
+			}
+		});
+		console.log("页面卸载",this.data.userInfo)
 	},
 
 	/**

@@ -2,23 +2,31 @@
 const app = getApp()
 
 Component({
-	// options: {
-	// 	watch: {
-	// 		'properties.userInfo.stationName': function (newVal, oldVal) {
-	// 			this.onUserInfoChange()
-	// 			console.log('stationName改变from', oldVal, 'to', newVal)
-	// 		},
-	// 		'properties.userInfo.driverId': function (newVal, oldVal) {
-	// 			this.onUserInfoChange()
-	// 			console.log('driverId改变from', oldVal, 'to', newVal)
-	// 		},
+		// watch: {
+		// 	'properties.userInfo.stationName': function (newVal, oldVal) {
+		// 		this.onUserInfoChange()
+		// 		console.log('stationName改变from', oldVal, 'to', newVal)
+		// 	},
+		// 	'properties.userInfo.driverId': function (newVal, oldVal) {
+		// 		this.onUserInfoChange()
+		// 		console.log('driverId改变from', oldVal, 'to', newVal)
+		// 	}
+		// },
+		observers: {
+			'userInfo.**': function(userInfo) {
+				this.onUserInfoChange(userInfo);
+				console.log("显示未匹配组件",this.data.showNoBus)
+			console.log("显示选择站点组件",this.data.showContainer)
+			}
+		},
+	
+	// lifetimes:{
+	// 	updated(){
+	// 		this.onUserInfoChange()
+	// 		console.log("显示未匹配组件",this.data.showNoBus)
+	// 		console.log("显示选择站点组件",this.data.showContainer)
 	// 	}
 	// },
-	lifetimes:{
-		attached(){
-			this.onUserInfoChange()
-		}
-	},
 
 	/**
 	 * 组件的属性列表
@@ -138,22 +146,24 @@ Component({
 		},
 
 		//用户匹配到司机时、选择下车站点时，userInfo发生改变组件显示发生变化
-		onUserInfoChange() {
-
-			console.log(this.properties.userInfo.driverId)
-			if (app.globalData.userInfo.driverId == 0) {
+		onUserInfoChange(userInfo) {
+			console.log(userInfo)
+			if (app.globalData.userInfo.userInfo.driverId == 0) {
+				console.log("未匹配到司机, 显示 noBus 组件",app.globalData.userInfo)
 				// 未匹配到司机, 显示 noBus 组件
 				this.setData({
 					showNoBus: true,
 					showContainer: false
 				})
-			} else if (app.globalData.userInfo.stationName == null) {
+			} else if (app.globalData.userInfo.userInfo.stationName == null) {
+				console.log("已匹配到司机, 但未选择下车站点, 显示 container 组件",app.globalData.userInfo)
 				// 已匹配到司机, 但未选择下车站点, 显示 container 组件
 				this.setData({
 					showNoBus: false,
 					showContainer: true
 				})
 			} else {
+				console.log("已选择下车站点, 显示 successContainer 组件",app.globalData.userInfo)
 				// 已选择下车站点, 显示 successContainer 组件
 				this.setData({
 					showNoBus: false,

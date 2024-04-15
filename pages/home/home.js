@@ -182,13 +182,18 @@ Page({
 		setTimeout(() =>{
 			this.createLocationTimer() //页面加载时创建定时器
 		},5000)
-		this.getLogUserInfo() //获取已登录用户信息
+		if(app.globalData.userInfo.userInfo.role == 0){
+			this.getLogPassengerInfo() //获取已登录用户信息
+		}
+		// else if(app.globalData.userInfo.userInfo.role == 1){
+		// 	this.getLogDriverInfo()
+		// }
 		this.handleWebSocketMessage = this.handleWebSocketMessage.bind(this)
 		app.$on('socketMessage',this.handleWebSocketMessage)
 	},
 
 	//获取用户钱包余额、默认下车站点和匹配司机id
-	getLogUserInfo() {
+	getLogPassengerInfo() {
 		wx.request({
 			url: 'http://192.168.202.155:8080/passenger/current',
 			method: 'GET',

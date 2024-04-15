@@ -26,7 +26,6 @@ Component({
 
 	lifetimes:{
 		attached() {
-		
 		// console.log("getoff司机页面",this.data.options.['长安校区'])
 		// 监听 WebSocket 连接打开事件
 		wx.onSocketOpen((res) => {
@@ -77,7 +76,7 @@ Component({
 				url: 'http://192.168.202.155:8080/driver/stop',
 				method:'GET',
 				header:{
-					'Authorization': this.data.userInfo.token
+					'Authorization': app.globalData.userInfo.userInfo.token
 				},
 				success:(res)=>{
 					console.log('下车站点人数',res.data)
